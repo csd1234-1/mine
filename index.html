@@ -1,98 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PICHI❤</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background: linear-gradient(to right, #17b0e7, #1ac3e4);
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      height: 100vh;
-      color: #fff;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PICHI❤️</title>
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#ffdde1,#ee9ca7);
+  font-family:"Times New Roman", serif;
+  overflow:hidden;
+}
 
-    h1 {
-      font-size: 3em;
-      animation: pop 1s ease-in-out infinite alternate;
-      text-shadow: 2px 2px 5px #fdfafa;
-    }
+.card{
+  width:95%;
+  max-width:720px;
+  height:480px;
+  background:white;
+  border-radius:30px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
+  position:relative;
+  overflow:hidden;
+}
 
-    p {
-      font-size: 1.5em;
-      margin-top: 10px;
-      animation: fadeIn 2s ease forwards;
-    }
+/* Character */
+svg{
+  position:absolute;
+  left:5%;
+  bottom:90px;
+  width:150px;
+}
 
-    @keyframes pop {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
+/* Heart formation above text */
+.hearts{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:110px;
+  width:240px;
+  height:240px;
+}
 
-    @keyframes float {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-100vh); opacity: 0; }
-    }
+/* Small heart */
+.heart{
+  position:absolute;
+  width:16px;
+  height:16px;
+  background:#ff2e63;
+  transform:rotate(-45deg);
+  opacity:0;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+.heart::before,
+.heart::after{
+  content:'';
+  position:absolute;
+  width:16px;
+  height:16px;
+  background:#ff2e63;
+  border-radius:50%;
+}
+.heart::before{top:-8px;left:0;}
+.heart::after{left:8px;top:0;}
 
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: rgb(246, 2, 209);
-      transform: rotate(45deg);
-      animation: float 8s linear infinite;
-    }
+/* Text */
+.loveText{
+  position:absolute;
+  bottom:40px;
+  width:100%;
+  text-align:center;
+  font-size:clamp(28px,5vw,42px);
+  color:#ff2e63;
+  opacity:0;
+  animation:showText 3s 12s forwards;
+}
+@keyframes showText{ to{opacity:1;} }
 
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: rgb(248, 26, 166);
-      border-radius: 50%;
-    }
+/* Start Screen Button */
+#startScreen{
+  position:absolute;
+  top:0;left:0;width:100%;height:100%;
+  background:rgba(255,255,255,0.95);
+  display:flex;justify-content:center;align-items:center;
+  z-index:999;
+}
+#startScreen button{
+  font-size:24px;
+  padding:20px 40px;
+  border:none;
+  border-radius:10px;
+  background:#ff3366;
+  color:white;
+  cursor:pointer;
+}
 
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-  </style>
+@media(max-width:600px){
+  svg{width:120px;}
+  .hearts{width:200px;height:200px;bottom:120px;}
+}
+</style>
 </head>
 <body>
-  <h1>💖AMMU💖</h1>
 
-  <script>
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (3 + Math.random() * 5) + 's';
-      document.body.appendChild(heart);
+<div class="card">
 
-      setTimeout(() => {
-        heart.remove();
-      }, 8000);
-    }
+<svg viewBox="0 0 180 230">
+  <path d="M90 45 a35 35 0 1 1 -0.1 0" stroke="black" fill="none"/>
+  <path d="M90 80 L90 150" stroke="black"/>
+  <path d="M90 100 L65 90" stroke="black"/>
+  <path d="M90 100 L120 85" stroke="black"/>
+  <path d="M120 85 L140 80" stroke="black"/>
+  <path d="M90 150 L75 180" stroke="black"/>
+  <path d="M90 150 L105 180" stroke="black"/>
+  <circle cx="80" cy="60" r="2"/>
+  <circle cx="100" cy="60" r="2"/>
+  <path d="M80 70 Q90 78 100 70" stroke="black" fill="none"/>
+</svg>
 
-    setInterval(createHeart, 300);
-  </script>
+<div class="hearts" id="hearts"></div>
+<div class="loveText">I Love You</div>
+
+<audio id="bgMusic">
+  <source src="eega.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+<!-- Start Screen -->
+<div id="startScreen">
+  <button>Play Animation 💖</button>
+</div>
+
+<script>
+const container = document.getElementById("hearts");
+const music = document.getElementById("bgMusic");
+const startBtn = document.querySelector("#startScreen button");
+const startScreen = document.getElementById("startScreen");
+
+const shape = [
+[6,0],[8,0],[10,0],[12,0],
+[5,1],[7,1],[9,1],[11,1],[13,1],
+[4,2],[6,2],[8,2],[10,2],[12,2],[14,2],
+[4,3],[6,3],[8,3],[10,3],[12,3],[14,3],
+[5,4],[7,4],[9,4],[11,4],[13,4],
+[6,5],[8,5],[10,5],[12,5],
+[7,6],[9,6],[11,6],
+[8,7],[10,7],
+[9,8]
+];
+const spacing = 18;
+
+// Function to start heart animation
+function startHeartAnimation() {
+  shape.forEach((pos,index)=>{
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    // start bottom center
+    heart.style.left = "120px";
+    heart.style.top = "240px";
+    container.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.style.transition = "all 2s ease-in-out";
+      heart.style.left = pos[0]*spacing + "px";
+      heart.style.top = pos[1]*spacing + "px";
+      heart.style.opacity = "1";
+    }, index * (15000 / shape.length));  // spread over 15 seconds
+  });
+}
+
+// Start button click
+startBtn.addEventListener("click", ()=>{
+  startScreen.style.display = "none";
+  music.play();
+  startHeartAnimation();
+});
+</script>
+
 </body>
 </html>
